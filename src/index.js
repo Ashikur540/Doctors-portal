@@ -1,14 +1,24 @@
+import {
+  QueryClient,
+  QueryClientProvider
+} from '@tanstack/react-query';
 import React from 'react';
+import 'react-day-picker/dist/style.css';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
+import AuthProvider from './Contexts/AuthProvider';
+import './index.css';
 import reportWebVitals from './reportWebVitals';
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const queryClient = new QueryClient()
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+
+  <QueryClientProvider client={queryClient}>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </QueryClientProvider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
