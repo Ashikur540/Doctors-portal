@@ -4,14 +4,21 @@ import toast from 'react-hot-toast';
 import { useLocation } from "react-router";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from '../../../Contexts/AuthProvider';
+import { useToken } from '../../../Hooks/useToken';
 const Login = () => {
     const { loginUser } = useContext(AuthContext);
     const [loginErr, setLoginErr] = useState("");
+    const [loginEmail, setLoginEmail] = useState('')
+    const [token] = useToken(loginEmail)
+
 
     // routing part
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || "/"
+
+    // jodi pai taile navigate korbo
+    if (token) navigate(from, { replace: true })
 
 
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -25,7 +32,9 @@ const Login = () => {
                 const user = result.user;
                 toast.success("Login successfull")
                 console.log(user);
-                navigate(from, { replace: true })
+                // setLoginEmail(user.email);
+                setLoginEmail(email);
+
             })
             .catch(err => {
                 console.log(err);

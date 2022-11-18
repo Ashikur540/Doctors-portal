@@ -1,11 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../Contexts/AuthProvider';
+import { useToken } from '../../../Hooks/useToken';
 export const Register = () => {
+    const [createdEmail, setCreatedEmail] = useState("")
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { createUser, updateUser } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [token] = useToken(createdEmail);
+    if (token) navigate("/")
+
     const handleSignup = (data) => {
         console.log(data);
         const { email, password, fullname } = data;
@@ -16,9 +22,12 @@ export const Register = () => {
                 const userInfo = {
                     displayName: fullname
                 }
-                console.log("SUER INFO", userInfo);
+                // console.log("SUER INFO", userInfo);
                 updateUser(userInfo)
-                    .then(() => { navigate("/") })
+                    .then(() => {
+                        saveUser(fullname, email)
+
+                    })
                     .catch(err => console.error(err.message))
             })
 
@@ -27,6 +36,25 @@ export const Register = () => {
             })
 
     }
+
+
+    const saveUser = (name, email) => {
+        const user = { name, email };
+        fetch(`http://localhost:5000/users`, {
+            method: "post",
+            headers: {
+                'content-type': "application/json"
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log("saved user", data);
+                // getUserToken(email)
+                setCreatedEmail(email)
+            })
+    }
+
 
 
     return (

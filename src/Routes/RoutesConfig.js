@@ -1,4 +1,7 @@
+import DashboardLayout from "../Layouts/DashboardLayout";
+import AllUsers from "../Pages/Admin/Allusers/AllUsers";
 import { Dashboard } from "../Pages/Admin/Dashboard/Dashboard";
+import Myappointments from "../Pages/Admin/Myappointments/Myappointments";
 import { Appointment } from "../Pages/Appointment/Appointment";
 import Login from "../Pages/Authentication/Login/Login";
 import { Register } from "../Pages/Authentication/Register/Register";
@@ -29,10 +32,21 @@ export const router = createBrowserRouter([
                 path: "/appointment",
                 element: <Appointment />
             },
+
+        ]
+    },
+    {
+        path: "/dashboard",
+        element: <PrivateRoute><DashboardLayout /><Dashboard /></PrivateRoute>,
+        children: [
             {
                 path: "/dashboard",
-                element: <PrivateRoute><Dashboard /></PrivateRoute>
+                element: <Myappointments />,
+            },
+            {
+                path: "/dashboard/allusers",
+                element: <AllUsers />,
             },
         ]
-    }
+    },
 ])
