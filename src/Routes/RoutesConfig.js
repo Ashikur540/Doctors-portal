@@ -5,6 +5,7 @@ import Myappointments from "../Pages/Admin/Myappointments/Myappointments";
 import { Appointment } from "../Pages/Appointment/Appointment";
 import Login from "../Pages/Authentication/Login/Login";
 import { Register } from "../Pages/Authentication/Register/Register";
+import { AdminRoute } from "./Admin/AdminRoute";
 import { PrivateRoute } from "./Private/PrivateRoute";
 
 const { createBrowserRouter } = require("react-router-dom");
@@ -45,7 +46,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/dashboard/allusers",
-                element: <AllUsers />,
+                element: <AdminRoute><AllUsers /> </AdminRoute>,
             },
         ]
     },
