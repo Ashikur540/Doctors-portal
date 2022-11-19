@@ -12,7 +12,10 @@ const AllUsers = () => {
 
     const handleMakeAdmin = (id) => {
         fetch(`${baseUrl}/users/admin/${id}`, {
-            method: "PUT"
+            method: "PUT",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('doctors-token')}`
+            }
         }).then(res => res.json())
             .then(data => {
                 console.log(data);
