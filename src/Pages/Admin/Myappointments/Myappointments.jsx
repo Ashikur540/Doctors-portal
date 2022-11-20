@@ -33,7 +33,7 @@ const Myappointments = () => {
                     <tbody>
 
                         {
-                            myappointmentsData.map((singleBooking, index) => <tr key={singleBooking._id}>
+                            myappointmentsData?.map((singleBooking, index) => <tr key={singleBooking._id}>
                                 <th>{index + 1}</th>
                                 <td>{singleBooking.patientName}</td>
                                 <td>{singleBooking.treatmentName}</td>

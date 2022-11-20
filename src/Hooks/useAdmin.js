@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useUrl } from "./useUrl";
 
+
+// to verify an admin is actually a admin or not
 export const useAdmin = (email) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [isAdminLoading, setIsAdminLoading] = useState(true);

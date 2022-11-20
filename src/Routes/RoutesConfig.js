@@ -1,4 +1,6 @@
+import { ManageDoctors } from "../../src/Pages/Admin/Manage Doctors/ManageDoctors";
 import DashboardLayout from "../Layouts/DashboardLayout";
+import { AddDoc } from "../Pages/Admin/AddDoctor/AddDoc";
 import AllUsers from "../Pages/Admin/Allusers/AllUsers";
 import { Dashboard } from "../Pages/Admin/Dashboard/Dashboard";
 import Myappointments from "../Pages/Admin/Myappointments/Myappointments";
@@ -7,11 +9,9 @@ import Login from "../Pages/Authentication/Login/Login";
 import { Register } from "../Pages/Authentication/Register/Register";
 import { AdminRoute } from "./Admin/AdminRoute";
 import { PrivateRoute } from "./Private/PrivateRoute";
-
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../Layouts/Main");
 const { default: Home } = require("../Pages/Home/Home");
-
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -48,6 +48,15 @@ export const router = createBrowserRouter([
                 path: "/dashboard/allusers",
                 element: <AdminRoute><AllUsers /> </AdminRoute>,
             },
+            {
+                path: "/dashboard/adddoctor",
+                element: <AdminRoute><AddDoc></AddDoc> </AdminRoute>,
+            },
+            {
+                path: '/dashboard/managedoctors',
+                element: <AdminRoute><ManageDoctors></ManageDoctors> </AdminRoute>,
+            },
         ]
     },
+
 ])
