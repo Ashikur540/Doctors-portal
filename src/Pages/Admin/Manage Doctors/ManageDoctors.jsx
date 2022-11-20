@@ -1,18 +1,39 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { useState } from 'react'
+import { toast } from "react-hot-toast"
 import { useUrl } from '../../../Hooks/useUrl'
 import { ConfirmationModal } from '../../Shared/Confirmation modal/ConfirmationModal'
 import Spinner from '../../Shared/Spinner/Spinner'
-
 export const ManageDoctors = () => {
     const [deletingDoc, setDeletingDoc] = useState(null)
     const baseUrl = useUrl()
-    const { data: doctors = [], isLoading } = useQuery({
+    const { data: doctors = [], isLoading, refetch } = useQuery({
         queryKey: ['doctors'],
         queryFn: () => fetch(`${baseUrl}/doctors`).then(res => res.json())
     })
 
     if (isLoading) return <Spinner />
+    const handleDelete = (id, deletingDoc) => {
+        const { name } = deletingDoc;
+        // console.log(id);
+        fetch(`${baseUrl}/doctors/${id}`, {
+            method: "DELETE",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('doctors-token')}`
+            },
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.deletedCount) {
+                    toast.success(`${name} deletion success`);
+                    setDeletingDoc(null)
+                    refetch();
+                }
+            })
+
+    }
+
     return (
         <>
             <div className="overflow-x-auto">
@@ -58,6 +79,9 @@ export const ManageDoctors = () => {
                     deletingDoc && <ConfirmationModal
                         deletingDoc={deletingDoc}
                         setDeletingDoc={setDeletingDoc}
+                        title
+                        message
+                        handleDelete={handleDelete}
                     />
                 }
             </div>
