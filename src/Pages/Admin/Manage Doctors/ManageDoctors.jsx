@@ -9,7 +9,11 @@ export const ManageDoctors = () => {
     const baseUrl = useUrl()
     const { data: doctors = [], isLoading, refetch } = useQuery({
         queryKey: ['doctors'],
-        queryFn: () => fetch(`${baseUrl}/doctors`).then(res => res.json())
+        queryFn: () => fetch(`${baseUrl}/doctors`, {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('doctors-token')}`
+            }
+        }).then(res => res.json())
     })
 
     if (isLoading) return <Spinner />

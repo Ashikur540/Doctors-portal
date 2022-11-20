@@ -15,7 +15,8 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
     const logoutUser = () => {
-        setLoading(true)
+        setLoading(true);
+        localStorage.removeItem('doctors-token');
         return signOut(auth);
     }
 
