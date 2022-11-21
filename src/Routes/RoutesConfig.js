@@ -7,6 +7,8 @@ import Myappointments from "../Pages/Admin/Myappointments/Myappointments";
 import { Appointment } from "../Pages/Appointment/Appointment";
 import Login from "../Pages/Authentication/Login/Login";
 import { Register } from "../Pages/Authentication/Register/Register";
+import { Payment } from "../Pages/Payment/Payment";
+import ErrorPage from "../Pages/Shared/ErrorPage/ErrorPage";
 import { AdminRoute } from "./Admin/AdminRoute";
 import { PrivateRoute } from "./Private/PrivateRoute";
 const { createBrowserRouter } = require("react-router-dom");
@@ -16,6 +18,7 @@ export const router = createBrowserRouter([
     {
         path: "/",
         element: <Main />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: "/",
@@ -39,6 +42,7 @@ export const router = createBrowserRouter([
     {
         path: "/dashboard",
         element: <PrivateRoute><DashboardLayout /><Dashboard /></PrivateRoute>,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: "/dashboard",
@@ -55,6 +59,11 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/managedoctors',
                 element: <AdminRoute><ManageDoctors></ManageDoctors> </AdminRoute>,
+            },
+            {
+                path: '/dashboard/payment/:id',
+                element: <AdminRoute><Payment></Payment> </AdminRoute>,
+                loader: ({ params }) => fetch(`http://localhost:5000/bookings/${params.id}`)
             },
         ]
     },
